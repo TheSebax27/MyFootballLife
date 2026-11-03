@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"C:\\\\SebastianProyectos\\\\MyLifeFootball\\\\src\" -Recurse | Select-Object FullName | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\SebastianProyectos\\\\MyLifeFootball\\\\\", \"\"\\) })",
+      "PowerShell(Get-ChildItem \"C:\\\\SebastianProyectos\\\\MyLifeFootball\\\\supabase\" -Recurse | Select-Object FullName | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\SebastianProyectos\\\\MyLifeFootball\\\\\", \"\"\\) })"
+    ]
+  }
+}
