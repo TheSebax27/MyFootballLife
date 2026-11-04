@@ -7,6 +7,7 @@ import { AuthLayout } from '@/components/layout/AuthLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PasswordInput } from '@/components/ui/password-input'
 import { useAuth } from '@/hooks/useAuth'
 import { registerSchema, type RegisterFormValues } from '@/schemas/auth'
 
@@ -64,9 +65,8 @@ export function RegisterPage() {
 
         <div className="space-y-1.5">
           <Label htmlFor="password">Contraseña</Label>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="new-password"
             placeholder="Mínimo 8 caracteres"
             aria-invalid={!!errors.password}
@@ -77,9 +77,8 @@ export function RegisterPage() {
 
         <div className="space-y-1.5">
           <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
-          <Input
+          <PasswordInput
             id="confirmPassword"
-            type="password"
             autoComplete="new-password"
             placeholder="Repite la contraseña"
             aria-invalid={!!errors.confirmPassword}
