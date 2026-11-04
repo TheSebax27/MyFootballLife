@@ -11,8 +11,6 @@ import type { CareerRow } from '@/types/database'
 
 type Stats = { careers: number; titles: number }
 
-const MODE_LABEL: Record<string, string> = { manager: 'Director Técnico', player: 'Jugador' }
-
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime()
   const mins = Math.floor(diff / 60000)

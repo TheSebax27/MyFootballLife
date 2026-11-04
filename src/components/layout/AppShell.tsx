@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LogOut, LayoutDashboard, Briefcase, BarChart2, Users, Settings } from 'lucide-react'
+import { LogOut, LayoutDashboard, Briefcase, BarChart2, Users } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/useAuth'
