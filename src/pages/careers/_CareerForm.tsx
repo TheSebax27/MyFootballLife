@@ -101,7 +101,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
         <div className="flex gap-2">
           {([
             { value: 'manager', label: 'Director Técnico' },
-            { value: 'player', label: 'Jugador' },
+            { value: 'player',  label: 'Jugador' },
           ] as const).map(({ value, label }) => (
             <label
               key={value}
@@ -211,9 +211,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
           placeholder="Ej. La Liga EA Sports"
           autoComplete="off"
           {...register('league_name', {
-            onChange: (e) => {
-              setSelectedLeagueName(e.target.value)
-            },
+            onChange: (e) => setSelectedLeagueName(e.target.value),
           })}
         />
         <datalist id="league-list">
@@ -247,6 +245,30 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
             ))}
         </datalist>
         {errors.club_name && <p className="text-xs text-destructive">{errors.club_name.message}</p>}
+      </div>
+
+      {/* Selección nacional — DT puede dirigir también una selección; jugador puede estar convocado */}
+      <div className="rounded-lg border border-border/50 bg-muted/30 p-4 space-y-3">
+        <p className="text-sm font-medium">
+          {mode === 'manager' ? '¿También diriges una selección nacional?' : 'Llamado a la selección nacional'}
+        </p>
+        <Input
+          id="national_team"
+          list="national-team-list"
+          placeholder="Ej. Colombia, Argentina, España..."
+          autoComplete="off"
+          {...register('national_team')}
+        />
+        <datalist id="national-team-list">
+          {COUNTRIES.map((c) => (
+            <option key={c.code} value={`${c.flag} ${c.name}`} />
+          ))}
+        </datalist>
+        <p className="text-xs text-muted-foreground">
+          {mode === 'manager'
+            ? 'Déjalo vacío si solo diriges un club.'
+            : 'Déjalo vacío si no estás convocado actualmente.'}
+        </p>
       </div>
 
       {/* Año de inicio */}

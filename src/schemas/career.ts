@@ -14,6 +14,7 @@ export const careerSchema = z.object({
       'Año entre 1990 y 2100',
     ),
   position: z.enum(['portero', 'defensa', 'mediocampista', 'delantero']).optional(),
+  national_team: z.string().max(80).optional(),
   nationality: z.string().max(80).optional(),
   league_name: z.string().max(100).optional(),
   club_name: z.string().max(80).optional(),
