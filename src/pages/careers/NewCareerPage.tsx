@@ -94,6 +94,7 @@ export function NewCareerPage() {
         name: values.name,
         mode: values.mode,
         manager_name: values.manager_name || null,
+        position: values.position || null,
         nationality: values.nationality ? values.nationality.replace(/^\S+\s/, '') : null,
         league_name: values.league_name || null,
         club_name: values.club_name || null,

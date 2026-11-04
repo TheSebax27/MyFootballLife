@@ -69,6 +69,7 @@ export type CareerRow = Timestamps & {
   club_id: string | null; manager_name: string | null; start_year: number | null
   description: string | null; cover_url: string | null; status: CareerStatus; visibility: Visibility
   nationality: string | null; league_name: string | null; club_name: string | null
+  position: 'portero' | 'defensa' | 'mediocampista' | 'delantero' | null
 }
 export type SeasonRow = Timestamps & {
   id: string; career_id: string; owner_id: string; start_year: number; label: string

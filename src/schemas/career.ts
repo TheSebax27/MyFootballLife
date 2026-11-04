@@ -13,6 +13,7 @@ export const careerSchema = z.object({
       (v) => parseInt(v, 10) >= 1990 && parseInt(v, 10) <= 2100,
       'Año entre 1990 y 2100',
     ),
+  position: z.enum(['portero', 'defensa', 'mediocampista', 'delantero']).optional(),
   nationality: z.string().max(80).optional(),
   league_name: z.string().max(100).optional(),
   club_name: z.string().max(80).optional(),

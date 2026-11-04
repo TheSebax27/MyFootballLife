@@ -44,6 +44,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
   const mode = watch('mode')
   const visibility = watch('visibility')
   const gameId = watch('game_id')
+  const position = watch('position')
 
   // set first game as default once loaded
   useEffect(() => {
@@ -117,6 +118,48 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
           ))}
         </div>
       </div>}
+
+      {/* Posición — solo en modo jugador */}
+      {mode === 'player' && (
+        <div className="space-y-2">
+          <Label>
+            Posición <span className="text-destructive">*</span>
+          </Label>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {([
+              { value: 'portero',        label: 'Portero',        img: '/images/positions/portero.jpg' },
+              { value: 'defensa',        label: 'Defensa',        img: '/images/positions/defensa.jpg' },
+              { value: 'mediocampista',  label: 'Mediocampista',  img: '/images/positions/mediocampista.jpg' },
+              { value: 'delantero',      label: 'Delantero',      img: '/images/positions/delantero.jpg' },
+            ] as const).map(({ value, label, img }) => (
+                <label
+                  key={value}
+                  className={cn(
+                    'relative cursor-pointer overflow-hidden rounded-xl border-2 transition-all',
+                    position === value
+                      ? 'border-primary shadow-[0_0_0_1px] shadow-primary/30'
+                      : 'border-transparent hover:border-border',
+                  )}
+                >
+                  <input type="radio" value={value} className="sr-only" {...register('position')} />
+                  <img
+                    src={img}
+                    alt={label}
+                    className="aspect-[3/4] w-full object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                  <span className={cn(
+                    'absolute bottom-2 left-0 right-0 text-center text-sm font-semibold',
+                    position === value ? 'text-primary' : 'text-white',
+                  )}>
+                    {label}
+                  </span>
+                </label>
+            ))}
+          </div>
+          {errors.position && <p className="text-xs text-destructive">{errors.position.message}</p>}
+        </div>
+      )}
 
       {/* Nombre del DT — solo en modo manager */}
       {mode === 'manager' && (
