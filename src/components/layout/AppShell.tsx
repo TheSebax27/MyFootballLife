@@ -28,7 +28,7 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="flex min-h-svh flex-col">
-      <header className="sticky top-0 z-40 border-b border-border/50 bg-card/80 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-primary/30 bg-card/90 backdrop-blur-md">
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
           {/* Logo + nav */}
           <div className="flex items-center gap-6">
@@ -51,7 +51,7 @@ export function AppShell({ children }: AppShellProps) {
                     className={cn(
                       'flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
                       active
-                        ? 'bg-primary/15 text-primary'
+                        ? 'bg-primary text-primary-foreground font-semibold shadow-sm'
                         : disabled
                         ? 'cursor-default text-muted-foreground/40'
                         : 'text-muted-foreground hover:bg-accent hover:text-foreground',
@@ -73,6 +73,7 @@ export function AppShell({ children }: AppShellProps) {
 
           {/* Right: avatar + logout */}
           <div className="flex items-center gap-1">
+            <div className="mx-2 hidden h-5 w-px bg-border/60 md:block" />
             <Link
               to="/profile"
               className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent"
