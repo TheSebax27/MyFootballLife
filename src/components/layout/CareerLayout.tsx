@@ -6,11 +6,11 @@ import { cn } from '@/utils/cn'
 const SECTIONS = [
   { label: 'Resumen', path: '', end: true },
   { label: 'Temporadas', path: 'seasons', end: false },
-  { label: 'Partidos', path: 'matches', end: false, disabled: true },
-  { label: 'Fichajes', path: 'transfers', end: false, disabled: true },
-  { label: 'Plantilla', path: 'squad', end: false, disabled: true },
-  { label: 'Títulos', path: 'titles', end: false, disabled: true },
-  { label: 'Estadísticas', path: 'statistics', end: false, disabled: true },
+  { label: 'Partidos', path: 'matches', end: false },
+  { label: 'Fichajes', path: 'transfers', end: false },
+  { label: 'Plantilla', path: 'squad', end: false },
+  { label: 'Títulos', path: 'titles', end: false },
+  { label: 'Estadísticas', path: 'statistics', end: false },
 ]
 
 export function CareerLayout() {

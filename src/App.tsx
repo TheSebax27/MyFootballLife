@@ -17,6 +17,23 @@ import { SeasonsPage } from '@/pages/careers/seasons/SeasonsPage'
 import { NewSeasonPage } from '@/pages/careers/seasons/NewSeasonPage'
 import { SeasonDetailPage } from '@/pages/careers/seasons/SeasonDetailPage'
 import { SeasonEditPage } from '@/pages/careers/seasons/SeasonEditPage'
+import { MatchesPage } from '@/pages/careers/matches/MatchesPage'
+import { NewMatchPage } from '@/pages/careers/matches/NewMatchPage'
+import { MatchDetailPage } from '@/pages/careers/matches/MatchDetailPage'
+import { MatchEditPage } from '@/pages/careers/matches/MatchEditPage'
+import { TransfersPage } from '@/pages/careers/transfers/TransfersPage'
+import { NewTransferPage } from '@/pages/careers/transfers/NewTransferPage'
+import { TransferDetailPage } from '@/pages/careers/transfers/TransferDetailPage'
+import { TransferEditPage } from '@/pages/careers/transfers/TransferEditPage'
+import { StatisticsPage } from '@/pages/careers/statistics/StatisticsPage'
+import { TitlesPage } from '@/pages/careers/titles/TitlesPage'
+import { NewTitlePage } from '@/pages/careers/titles/NewTitlePage'
+import { TitleDetailPage } from '@/pages/careers/titles/TitleDetailPage'
+import { TitleEditPage } from '@/pages/careers/titles/TitleEditPage'
+import { SquadPage } from '@/pages/careers/squad/SquadPage'
+import { NewSquadPlayerPage } from '@/pages/careers/squad/NewSquadPlayerPage'
+import { SquadPlayerDetailPage } from '@/pages/careers/squad/SquadPlayerDetailPage'
+import { SquadPlayerEditPage } from '@/pages/careers/squad/SquadPlayerEditPage'
 
 function App() {
   const { loading: authLoading } = useAuth()
@@ -58,6 +75,23 @@ function App() {
             <Route path="seasons/new" element={<NewSeasonPage />} />
             <Route path="seasons/:seasonId" element={<SeasonDetailPage />} />
             <Route path="seasons/:seasonId/edit" element={<SeasonEditPage />} />
+            <Route path="matches" element={<MatchesPage />} />
+            <Route path="matches/new" element={<NewMatchPage />} />
+            <Route path="matches/:matchId" element={<MatchDetailPage />} />
+            <Route path="matches/:matchId/edit" element={<MatchEditPage />} />
+            <Route path="transfers" element={<TransfersPage />} />
+            <Route path="transfers/new" element={<NewTransferPage />} />
+            <Route path="transfers/:transferId" element={<TransferDetailPage />} />
+            <Route path="transfers/:transferId/edit" element={<TransferEditPage />} />
+            <Route path="squad" element={<SquadPage />} />
+            <Route path="squad/new" element={<NewSquadPlayerPage />} />
+            <Route path="squad/:squadId" element={<SquadPlayerDetailPage />} />
+            <Route path="squad/:squadId/edit" element={<SquadPlayerEditPage />} />
+            <Route path="titles" element={<TitlesPage />} />
+            <Route path="titles/new" element={<NewTitlePage />} />
+            <Route path="titles/:titleId" element={<TitleDetailPage />} />
+            <Route path="titles/:titleId/edit" element={<TitleEditPage />} />
+            <Route path="statistics" element={<StatisticsPage />} />
           </Route>
         </Route>
 

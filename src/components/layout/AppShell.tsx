@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Trophy, LogOut } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/useAuth'
@@ -28,9 +28,8 @@ export function AppShell({ children }: AppShellProps) {
       <header className="sticky top-0 z-40 border-b bg-card/90 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
           <div className="flex items-center gap-6">
-            <Link to="/dashboard" className="flex items-center gap-2 font-bold tracking-tight">
-              <Trophy className="size-5 text-primary" />
-              <span>MyLifeFootball</span>
+            <Link to="/dashboard" className="flex items-center gap-2">
+              <img src="/images/logo.webp" alt="MyFootballLife" className="h-8 w-auto object-contain" />
             </Link>
             <nav className="hidden items-center gap-1 md:flex">
               {navLinks.map(({ to, label }) => (

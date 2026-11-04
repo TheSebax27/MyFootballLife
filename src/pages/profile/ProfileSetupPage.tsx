@@ -63,7 +63,7 @@ export function ProfileSetupPage() {
   return (
     <AuthLayout
       title="Personaliza tu perfil"
-      description="Elige cómo te verán los demás en MyLifeFootball."
+      description="Elige cómo te verán los demás en MyFootballLife."
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         <div className="space-y-1.5">
