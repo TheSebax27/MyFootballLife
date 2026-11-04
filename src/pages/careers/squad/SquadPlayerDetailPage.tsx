@@ -49,10 +49,10 @@ export function SquadPlayerDetailPage() {
         setPlayer(data as SquadRow)
         const { data: season } = await supabase
           .from('seasons')
-          .select('name')
+          .select('label')
           .eq('id', data.season_id)
           .single()
-        setSeasonName(season?.name ?? null)
+        setSeasonName(season?.label ?? null)
         setLoading(false)
       })
   }, [squadId, career.id])

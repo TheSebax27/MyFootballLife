@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Textarea } from '@/components/ui/textarea'
 
 interface Props {
   defaultValues?: Partial<SquadPlayerFormValues>
@@ -50,14 +49,14 @@ export function SquadPlayerForm({ defaultValues, seasons, onSubmit, serverError,
       {/* Temporada */}
       <div className="space-y-1.5">
         <Label htmlFor="season_id">Temporada *</Label>
-        <Select value={seasonId} onValueChange={(v) => setValue('season_id', v, { shouldValidate: true })}>
+        <Select value={seasonId} onValueChange={(v: string) => setValue('season_id', v, { shouldValidate: true })}>
           <SelectTrigger id="season_id">
             <SelectValue placeholder="Selecciona temporada" />
           </SelectTrigger>
           <SelectContent>
             {seasons.map((s) => (
               <SelectItem key={s.id} value={s.id}>
-                {s.name}
+                {s.label}
               </SelectItem>
             ))}
           </SelectContent>
@@ -104,7 +103,7 @@ export function SquadPlayerForm({ defaultValues, seasons, onSubmit, serverError,
             <Checkbox
               id="is_loan"
               checked={isLoan}
-              onCheckedChange={(v) => setValue('is_loan', Boolean(v))}
+              onCheckedChange={(v: boolean) => setValue('is_loan', v)}
             />
             <Label htmlFor="is_loan" className="cursor-pointer">Cedido</Label>
           </div>

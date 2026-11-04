@@ -56,7 +56,7 @@ export function TitlesPage() {
     )
   }
 
-  const seasonMap = Object.fromEntries(seasons.map((s) => [s.id, s.name]))
+  const seasonMap = Object.fromEntries(seasons.map((s) => [s.id, s.label]))
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -73,7 +73,7 @@ export function TitlesPage() {
             <SelectContent>
               <SelectItem value="all">Todas las temporadas</SelectItem>
               {seasons.map((s) => (
-                <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>

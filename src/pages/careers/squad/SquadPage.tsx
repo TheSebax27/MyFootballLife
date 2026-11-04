@@ -93,7 +93,7 @@ export function SquadPage() {
             </SelectTrigger>
             <SelectContent>
               {seasons.map((s) => (
-                <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -110,7 +110,7 @@ export function SquadPage() {
         <div className="rounded-xl border border-dashed p-12 text-center">
           <Users className="mx-auto mb-3 size-10 text-muted-foreground/40" />
           <p className="text-muted-foreground">
-            Sin jugadores en {currentSeason?.name ?? 'esta temporada'}.
+            Sin jugadores en {currentSeason?.label ?? 'esta temporada'}.
           </p>
           <Button variant="outline" className="mt-4" asChild>
             <Link to={`/careers/${career.id}/squad/new`}>Añadir primer jugador</Link>

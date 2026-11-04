@@ -37,10 +37,10 @@ export function TitleDetailPage() {
         setTitle(data as TitleRow)
         const { data: season } = await supabase
           .from('seasons')
-          .select('name')
+          .select('label')
           .eq('id', data.season_id)
           .single()
-        setSeasonName(season?.name ?? null)
+        setSeasonName(season?.label ?? null)
         setLoading(false)
       })
   }, [titleId, career.id])

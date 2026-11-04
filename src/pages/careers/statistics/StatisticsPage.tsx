@@ -146,7 +146,7 @@ export function StatisticsPage() {
           <SelectContent>
             <SelectItem value="all">Todas las temporadas</SelectItem>
             {seasons.map((s) => (
-              <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+              <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
             ))}
           </SelectContent>
         </Select>

@@ -3,7 +3,9 @@ import { AppShell } from '@/components/layout/AppShell'
 import { CareerProvider } from '@/contexts/CareerContext'
 import { cn } from '@/utils/cn'
 
-const SECTIONS = [
+type Section = { label: string; path: string; end: boolean; disabled?: boolean }
+
+const SECTIONS: Section[] = [
   { label: 'Resumen', path: '', end: true },
   { label: 'Temporadas', path: 'seasons', end: false },
   { label: 'Partidos', path: 'matches', end: false },

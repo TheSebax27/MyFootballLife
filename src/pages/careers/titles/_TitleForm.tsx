@@ -39,13 +39,13 @@ export function TitleForm({ defaultValues, seasons, onSubmit, serverError, submi
       {/* Temporada */}
       <div className="space-y-1.5">
         <Label htmlFor="season_id">Temporada *</Label>
-        <Select value={seasonId} onValueChange={(v) => setValue('season_id', v, { shouldValidate: true })}>
+        <Select value={seasonId} onValueChange={(v: string) => setValue('season_id', v, { shouldValidate: true })}>
           <SelectTrigger id="season_id">
             <SelectValue placeholder="Selecciona temporada" />
           </SelectTrigger>
           <SelectContent>
             {seasons.map((s) => (
-              <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+              <SelectItem key={s.id} value={s.id}>{s.label}</SelectItem>
             ))}
           </SelectContent>
         </Select>
