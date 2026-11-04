@@ -100,7 +100,7 @@
     background-size: cover;
     background-position: center bottom;
     background-attachment: fixed;
-    opacity: 0.04;
+    opacity: 0.13;
     pointer-events: none;
     z-index: -1;
   }

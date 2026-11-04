@@ -78,7 +78,7 @@ export function DashboardPage() {
 
   return (
     <AppShell>
-      <div className="flex h-[calc(100svh-3.5rem)] overflow-hidden">
+      <div className="flex h-[calc(100svh-3.5rem)]">
 
         {/* ── Left: scrollable content ── */}
         <div className="flex-1 overflow-y-auto px-6 py-6 lg:px-8">
@@ -308,30 +308,15 @@ export function DashboardPage() {
           </div>
         </div>
 
-        {/* ── Right panel: player + branding ── */}
-        <div className="relative hidden w-[380px] shrink-0 overflow-hidden lg:block xl:w-[440px]">
-          <div className="absolute inset-0 bg-background" />
-
-          {/* Green glows */}
-          <div
-            className="pointer-events-none absolute -left-24 -top-24 size-96 rounded-full opacity-15"
-            style={{ background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)' }}
-          />
-          <div
-            className="pointer-events-none absolute -bottom-20 left-1/2 size-80 -translate-x-1/2 rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, var(--color-primary) 0%, transparent 70%)' }}
-          />
-
-          {/* Left border accent */}
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-
+        {/* ── Right panel: player + branding (no bg, integrated) ── */}
+        <div className="relative hidden w-[380px] shrink-0 lg:block xl:w-[440px]">
           {/* Player image */}
           <img
             src="/images/hero-player.png"
             alt=""
             aria-hidden
             className="pointer-events-none absolute bottom-20 left-1/2 h-[68%] max-h-[520px] w-auto -translate-x-1/2 select-none object-contain object-bottom"
-            style={{ filter: 'drop-shadow(0 0 40px rgba(0,0,0,0.7))' }}
+            style={{ filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.6))' }}
           />
 
           {/* Branding */}
