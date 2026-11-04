@@ -29,6 +29,28 @@ export type ProfileRow = Timestamps & {
   bio: string | null
   visibility: Visibility
   onboarding_completed: boolean
+  is_admin: boolean
+}
+
+// Football data tables (admin-managed)
+export type FootballLeagueRow = Timestamps & {
+  id: string
+  name: string
+  country: string
+  logo_url: string | null
+}
+export type FootballClubRow = Timestamps & {
+  id: string
+  name: string
+  league_id: string | null
+  badge_url: string | null
+}
+export type FootballCompetitionRow = Timestamps & {
+  id: string
+  name: string
+  type: 'league' | 'cup' | 'international'
+  country: string | null
+  trophy_url: string | null
 }
 export type GameRow = { id: string; slug: string; name: string; publisher: string | null; created_at: string }
 export type ClubRow = Timestamps & {
@@ -113,6 +135,9 @@ export type Database = {
       clubs: TableDef<ClubRow, 'name'>
       players: TableDef<PlayerRow, 'full_name'>
       competitions: TableDef<CompetitionRow, 'name'>
+      leagues: TableDef<FootballLeagueRow, 'name' | 'country'>
+      football_clubs: TableDef<FootballClubRow, 'name'>
+      football_competitions: TableDef<FootballCompetitionRow, 'name'>
       careers: TableDef<CareerRow, 'game_id' | 'name'>
       seasons: TableDef<SeasonRow, 'career_id' | 'start_year' | 'label'>
       career_squads: TableDef<CareerSquadRow, 'career_id' | 'season_id' | 'player_name'>

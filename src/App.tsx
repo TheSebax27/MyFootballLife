@@ -34,6 +34,11 @@ import { SquadPage } from '@/pages/careers/squad/SquadPage'
 import { NewSquadPlayerPage } from '@/pages/careers/squad/NewSquadPlayerPage'
 import { SquadPlayerDetailPage } from '@/pages/careers/squad/SquadPlayerDetailPage'
 import { SquadPlayerEditPage } from '@/pages/careers/squad/SquadPlayerEditPage'
+import { AdminGuard } from '@/pages/admin/AdminGuard'
+import { AdminPage } from '@/pages/admin/AdminPage'
+import { AdminLeaguesPage } from '@/pages/admin/AdminLeaguesPage'
+import { AdminClubsPage } from '@/pages/admin/AdminClubsPage'
+import { AdminCompetitionsPage } from '@/pages/admin/AdminCompetitionsPage'
 
 function App() {
   const { loading: authLoading } = useAuth()
@@ -93,6 +98,14 @@ function App() {
             <Route path="titles/:titleId/edit" element={<TitleEditPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
           </Route>
+        </Route>
+
+        {/* Admin — solo is_admin = true */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/admin" element={<AdminGuard><AdminPage /></AdminGuard>} />
+          <Route path="/admin/leagues" element={<AdminGuard><AdminLeaguesPage /></AdminGuard>} />
+          <Route path="/admin/clubs" element={<AdminGuard><AdminClubsPage /></AdminGuard>} />
+          <Route path="/admin/competitions" element={<AdminGuard><AdminCompetitionsPage /></AdminGuard>} />
         </Route>
 
         {/* Fallback */}
