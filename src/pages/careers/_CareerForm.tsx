@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
@@ -9,17 +9,22 @@ import { Textarea } from '@/components/ui/textarea'
 import { useGames } from '@/hooks/useGames'
 import { careerSchema, type CareerFormValues } from '@/schemas/career'
 import { cn } from '@/utils/cn'
+import { COUNTRIES } from '@/constants/countries'
+import { LEAGUES } from '@/constants/leagues'
+import { CLUBS } from '@/constants/clubs'
 
 type CareerFormProps = {
   defaultValues?: Partial<CareerFormValues>
+  lockedMode?: boolean
   onSubmit: (values: CareerFormValues) => Promise<void>
   serverError: string | null
   submitLabel: string
   onCancel?: () => void
 }
 
-export function CareerForm({ defaultValues, onSubmit, serverError, submitLabel, onCancel }: CareerFormProps) {
+export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, submitLabel, onCancel }: CareerFormProps) {
   const games = useGames()
+  const [selectedLeagueName, setSelectedLeagueName] = useState<string>('')
 
   const {
     register,
@@ -87,8 +92,8 @@ export function CareerForm({ defaultValues, onSubmit, serverError, submitLabel, 
         {errors.game_id && <p className="text-xs text-destructive">{errors.game_id.message}</p>}
       </div>
 
-      {/* Modalidad */}
-      <div className="space-y-1.5">
+      {/* Modalidad — oculta cuando viene del selector de cards */}
+      {!lockedMode && <div className="space-y-1.5">
         <Label>
           Modalidad <span className="text-destructive">*</span>
         </Label>
@@ -111,7 +116,7 @@ export function CareerForm({ defaultValues, onSubmit, serverError, submitLabel, 
             </label>
           ))}
         </div>
-      </div>
+      </div>}
 
       {/* Nombre del DT — solo en modo manager */}
       {mode === 'manager' && (
@@ -131,10 +136,80 @@ export function CareerForm({ defaultValues, onSubmit, serverError, submitLabel, 
         </div>
       )}
 
+      {/* Nacionalidad */}
+      <div className="space-y-1.5">
+        <Label htmlFor="nationality">
+          Nacionalidad {mode === 'manager' ? 'del entrenador' : 'del jugador'}{' '}
+          <span className="text-xs text-muted-foreground">(opcional)</span>
+        </Label>
+        <Input
+          id="nationality"
+          list="nationality-list"
+          placeholder="Ej. Argentina"
+          autoComplete="off"
+          {...register('nationality')}
+        />
+        <datalist id="nationality-list">
+          {COUNTRIES.map((c) => (
+            <option key={c.code} value={`${c.flag} ${c.name}`} />
+          ))}
+        </datalist>
+        {errors.nationality && <p className="text-xs text-destructive">{errors.nationality.message}</p>}
+      </div>
+
+      {/* Liga */}
+      <div className="space-y-1.5">
+        <Label htmlFor="league_name">
+          Liga <span className="text-xs text-muted-foreground">(opcional)</span>
+        </Label>
+        <Input
+          id="league_name"
+          list="league-list"
+          placeholder="Ej. La Liga EA Sports"
+          autoComplete="off"
+          {...register('league_name', {
+            onChange: (e) => {
+              setSelectedLeagueName(e.target.value)
+            },
+          })}
+        />
+        <datalist id="league-list">
+          {LEAGUES.map((l) => (
+            <option key={`${l.countryCode}-${l.name}`} value={l.name}>
+              {l.country}
+            </option>
+          ))}
+        </datalist>
+        {errors.league_name && <p className="text-xs text-destructive">{errors.league_name.message}</p>}
+      </div>
+
+      {/* Club */}
+      <div className="space-y-1.5">
+        <Label htmlFor="club_name">
+          {mode === 'manager' ? 'Club que diriges' : 'Club donde juegas'}{' '}
+          <span className="text-xs text-muted-foreground">(opcional)</span>
+        </Label>
+        <Input
+          id="club_name"
+          list="club-list"
+          placeholder="Ej. Real Madrid"
+          autoComplete="off"
+          {...register('club_name')}
+        />
+        <datalist id="club-list">
+          {CLUBS
+            .filter((c) => !selectedLeagueName || c.leagueName === selectedLeagueName)
+            .map((c) => (
+              <option key={`${c.leagueName}-${c.name}`} value={c.name} />
+            ))}
+        </datalist>
+        {errors.club_name && <p className="text-xs text-destructive">{errors.club_name.message}</p>}
+      </div>
+
       {/* Año de inicio */}
       <div className="space-y-1.5">
         <Label htmlFor="start_year">
-          Año de inicio <span className="text-xs text-muted-foreground">(opcional)</span>
+          Año de inicio <span className="text-destructive">*</span>
         </Label>
         <Input
           id="start_year"

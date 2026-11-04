@@ -94,6 +94,9 @@ export function NewCareerPage() {
         name: values.name,
         mode: values.mode,
         manager_name: values.manager_name || null,
+        nationality: values.nationality ? values.nationality.replace(/^\S+\s/, '') : null,
+        league_name: values.league_name || null,
+        club_name: values.club_name || null,
         start_year: values.start_year ? parseInt(values.start_year, 10) : null,
         description: values.description || null,
         visibility: values.visibility,
@@ -140,6 +143,7 @@ export function NewCareerPage() {
 
           <CareerForm
             defaultValues={{ mode }}
+            lockedMode
             onSubmit={handleSubmit}
             serverError={serverError}
             submitLabel="Crear carrera"

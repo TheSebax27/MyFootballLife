@@ -48,7 +48,7 @@ export function RegisterPage() {
   }
 
   return (
-    <AuthLayout title="Crear cuenta" description="Ingresa tus datos para registrarte.">
+    <AuthLayout title="Crear cuenta" description="Ingresa tus datos para registrarte." image="/images/login1.jpg">
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
         <div className="space-y-1.5">
           <Label htmlFor="email">Correo electrónico</Label>

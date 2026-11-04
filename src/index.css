@@ -90,4 +90,17 @@
     @apply bg-background text-foreground antialiased;
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
   }
+  /* Stadium background — very subtle overlay so content is never affected */
+  #root::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/images/cancha.jpg');
+    background-size: cover;
+    background-position: center bottom;
+    background-attachment: fixed;
+    opacity: 0.055;
+    pointer-events: none;
+    z-index: -1;
+  }
 }
