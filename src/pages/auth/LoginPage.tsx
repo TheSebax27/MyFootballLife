@@ -36,7 +36,7 @@ export function LoginPage() {
 
   return (
     <AuthLayout title="Bienvenido de vuelta" description="Ingresa a tu cuenta para continuar." image="/images/login1.jpg">
-      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
         <div className="space-y-1.5">
           <Label htmlFor="email">Correo electrónico</Label>
           <Input
@@ -55,7 +55,7 @@ export function LoginPage() {
             <Label htmlFor="password">Contraseña</Label>
             <Link
               to="/forgot-password"
-              className="text-xs text-muted-foreground underline-offset-4 hover:underline"
+              className="text-xs underline-offset-4 hover:underline"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -71,18 +71,28 @@ export function LoginPage() {
         </div>
 
         {serverError && (
-          <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">{serverError}</p>
+          <p className="rounded-md bg-red-500/10 px-3 py-2 text-sm text-red-400">{serverError}</p>
         )}
 
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="w-full bg-green-500 font-semibold text-black hover:bg-green-400 active:bg-green-600"
+          disabled={isSubmitting}
+        >
           {isSubmitting && <Loader2 className="animate-spin" />}
           Iniciar sesión
         </Button>
       </form>
 
-      <p className="mt-4 text-center text-sm text-muted-foreground">
+      <div className="mt-6 flex items-center gap-3">
+        <div className="h-px flex-1 bg-white/10" />
+        <span className="text-xs text-white/30">o</span>
+        <div className="h-px flex-1 bg-white/10" />
+      </div>
+
+      <p className="mt-5 text-center text-sm">
         ¿No tienes cuenta?{' '}
-        <Link to="/register" className="text-primary underline-offset-4 hover:underline">
+        <Link to="/register" className="font-medium underline-offset-4 hover:underline">
           Registrarse
         </Link>
       </p>
