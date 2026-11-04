@@ -308,25 +308,43 @@ export function DashboardPage() {
           </div>
         </div>
 
-        {/* ── Right panel: player + branding (no bg, integrated) ── */}
+        {/* ── Right panel: player (integrated, no bg) ── */}
         <div className="relative hidden w-[380px] shrink-0 lg:block xl:w-[440px]">
+
+          {/* Green diagonal swoosh — right edge accent */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-0 top-0 h-full w-28 overflow-hidden"
+          >
+            <div
+              className="absolute inset-y-0 right-0 w-full origin-top-right"
+              style={{
+                background: 'linear-gradient(to left, oklch(0.68 0.17 150 / 0.55) 0%, oklch(0.68 0.17 150 / 0.15) 50%, transparent 100%)',
+                clipPath: 'polygon(55% 8%, 100% 0%, 100% 100%, 45% 92%)',
+              }}
+            />
+          </div>
+
           {/* Player image */}
           <img
             src="/images/hero-player.png"
             alt=""
             aria-hidden
-            className="pointer-events-none absolute bottom-20 left-1/2 h-[68%] max-h-[520px] w-auto -translate-x-1/2 select-none object-contain object-bottom"
+            className="pointer-events-none absolute bottom-0 left-1/2 h-[75%] max-h-[560px] w-auto -translate-x-1/2 select-none object-contain object-bottom"
             style={{ filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.6))' }}
           />
 
-          {/* Branding */}
-          <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center gap-1.5">
-            <img
-              src="/images/logo.webp"
-              alt="MyFootballLife"
-              className="h-10 w-auto object-contain"
-            />
-            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-primary/60">
+          {/* Leg fade */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-0 left-0 right-0 h-[32%]"
+            style={{ background: 'linear-gradient(to top, var(--background) 0%, var(--background) 15%, transparent 100%)' }}
+          />
+
+          {/* Tagline */}
+          <div className="absolute bottom-5 left-0 right-0 flex items-center justify-center gap-2">
+            <img src="/images/logo.webp" alt="" aria-hidden className="h-5 w-auto object-contain opacity-70" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-primary/60">
               Juega • Gestiona • Conquista
             </p>
           </div>
