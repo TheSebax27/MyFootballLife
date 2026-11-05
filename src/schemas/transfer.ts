@@ -46,20 +46,6 @@ export const WAGE_FREQUENCY_LABEL: Record<string, string> = {
   annual: 'Anual',
 }
 
-export const playerTransferSchema = z.object({
-  season_id: z.string().uuid('Selecciona una temporada'),
-  type: z.enum(PLAYER_TRANSFER_TYPES),
-  to_club_name: z.string().max(80).optional(),
-  fee: feeField,
-  currency: z.string().length(3),
-  wage: feeField,
-  wage_frequency: z.enum(['weekly', 'monthly', 'annual']).optional(),
-  transfer_date: z.string().optional(),
-  notes: z.string().max(1000).optional(),
-})
-
-export type PlayerTransferFormValues = z.infer<typeof playerTransferSchema>
-
 const feeField = z
   .string()
   .optional()
@@ -75,6 +61,20 @@ const yearField = z
     (v) => !v || (/^\d{4}$/.test(v) && parseInt(v, 10) >= 1990 && parseInt(v, 10) <= 2100),
     'Año entre 1990 y 2100',
   )
+
+export const playerTransferSchema = z.object({
+  season_id: z.string().uuid('Selecciona una temporada'),
+  type: z.enum(PLAYER_TRANSFER_TYPES),
+  to_club_name: z.string().max(80).optional(),
+  fee: feeField,
+  currency: z.string().length(3),
+  wage: feeField,
+  wage_frequency: z.enum(['weekly', 'monthly', 'annual']).optional(),
+  transfer_date: z.string().optional(),
+  notes: z.string().max(1000).optional(),
+})
+
+export type PlayerTransferFormValues = z.infer<typeof playerTransferSchema>
 
 export const transferSchema = z.object({
   season_id: z.string().uuid('Selecciona una temporada'),

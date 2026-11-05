@@ -69,7 +69,7 @@ export function TransferEditPage() {
 
   const defaultValues: Partial<TransferFormValues> = {
     season_id: transfer.season_id,
-    type: transfer.type,
+    type: transfer.type as TransferFormValues['type'],
     player_name: transfer.player_name,
     from_club_name: transfer.from_club_name ?? '',
     to_club_name: transfer.to_club_name ?? '',
