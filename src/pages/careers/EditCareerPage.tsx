@@ -48,6 +48,7 @@ export function EditCareerPage() {
         club_name: values.club_name || null,
         start_year: values.start_year ? parseInt(values.start_year, 10) : null,
         description: values.description || null,
+        cover_url: values.cover_url || null,
         visibility: values.visibility,
       })
       .eq('id', id)
@@ -113,6 +114,7 @@ export function EditCareerPage() {
             club_name: career.club_name ?? '',
             start_year: career.start_year?.toString() ?? '',
             description: career.description ?? '',
+            cover_url: career.cover_url ?? '',
             visibility: career.visibility,
           }}
           onSubmit={handleSubmit}

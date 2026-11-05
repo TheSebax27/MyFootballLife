@@ -56,6 +56,7 @@ export function NewSeasonPage() {
       club_name: values.club_name || null,
       status: values.status,
       notes: values.notes || null,
+      formation: values.formation || null,
     })
     if (error) {
       setServerError('No se pudo crear la temporada. Inténtalo de nuevo.')
@@ -126,6 +127,19 @@ export function NewSeasonPage() {
           />
           {errors.club_name && (
             <p className="text-sm text-destructive">{errors.club_name.message}</p>
+          )}
+        </div>
+
+        {/* Formation */}
+        <div className="space-y-1.5">
+          <Label htmlFor="formation">Formación (opcional)</Label>
+          <Input
+            id="formation"
+            placeholder="Ej. 4-3-3, 4-2-3-1..."
+            {...register('formation')}
+          />
+          {errors.formation && (
+            <p className="text-sm text-destructive">{errors.formation.message}</p>
           )}
         </div>
 

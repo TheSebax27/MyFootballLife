@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Swords } from 'lucide-react'
+import { Plus, Search, Swords } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
 import { useCareer } from '@/hooks/useCareer'
 import { supabase } from '@/services/supabase/client'
 import type { MatchRow, SeasonRow } from '@/types/database'
@@ -19,6 +20,7 @@ export function MatchesPage() {
   const [matches, setMatches] = useState<MatchRow[]>([])
   const [seasons, setSeasons] = useState<SeasonRow[]>([])
   const [filterSeason, setFilterSeason] = useState<string>('all')
+  const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -40,8 +42,17 @@ export function MatchesPage() {
     })
   }, [career.id])
 
-  const filtered =
-    filterSeason === 'all' ? matches : matches.filter((m) => m.season_id === filterSeason)
+  const filtered = matches.filter((m) => {
+    if (filterSeason !== 'all' && m.season_id !== filterSeason) return false
+    if (search.trim()) {
+      const q = search.trim().toLowerCase()
+      return (
+        m.opponent_name.toLowerCase().includes(q) ||
+        (m.competition_name ?? '').toLowerCase().includes(q)
+      )
+    }
+    return true
+  })
 
   if (loading) {
     return (
@@ -62,7 +73,16 @@ export function MatchesPage() {
               : `${filtered.length} partido${filtered.length !== 1 ? 's' : ''}`}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Buscar rival o competición..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="h-8 w-48 pl-8 text-sm sm:w-56"
+            />
+          </div>
           {seasons.length > 0 && (
             <select
               value={filterSeason}

@@ -12,6 +12,7 @@ export const seasonSchema = z.object({
   label: z.string().min(1, 'El nombre es requerido').max(30, 'Máximo 30 caracteres'),
   club_name: z.string().max(80, 'Máximo 80 caracteres').optional(),
   status: z.enum(['in_progress', 'completed']),
+  formation: z.string().max(20).optional(),
   notes: z.string().max(1000, 'Máximo 1000 caracteres').optional(),
 })
 

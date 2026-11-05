@@ -19,6 +19,7 @@ export const careerSchema = z.object({
   league_name: z.string().min(1, 'Campo requerido').max(100),
   club_name: z.string().min(1, 'Campo requerido').max(80),
   description: z.string().max(500, 'Máximo 500 caracteres').optional(),
+  cover_url: z.string().url('URL inválida').max(500).optional().or(z.literal('')),
   visibility: z.enum(['private', 'public']),
 }).superRefine((data, ctx) => {
   if (data.mode === 'player' && !data.position) {

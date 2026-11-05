@@ -76,6 +76,7 @@ export type CareerRow = Timestamps & {
 export type SeasonRow = Timestamps & {
   id: string; career_id: string; owner_id: string; start_year: number; label: string
   club_id: string | null; club_name: string | null; status: SeasonStatus; notes: string | null
+  formation: string | null
 }
 export type CareerSquadRow = Timestamps & {
   id: string; career_id: string; season_id: string; owner_id: string
@@ -128,7 +129,13 @@ export type PlayerSeasonStatsRow = {
   matches_played: number; goals: number; assists: number
   yellow_cards: number; red_cards: number
   clean_sheets: number | null
+  overall: number | null; potential: number | null
   created_at: string; updated_at: string
+}
+export type SeasonObjectiveRow = {
+  id: string; career_id: string; season_id: string; owner_id: string
+  description: string; target_value: number | null; is_completed: boolean
+  created_at: string
 }
 
 // Insert: todo opcional salvo lo que la BD exige. Update: todo opcional.
@@ -163,6 +170,7 @@ export type Database = {
       career_titles: TableDef<CareerTitleRow, 'career_id' | 'season_id' | 'competition_name'>
       player_awards: TableDef<PlayerAwardRow, 'career_id' | 'season_id' | 'player_name' | 'award_name'>
       player_season_stats: TableDef<PlayerSeasonStatsRow, 'career_id' | 'season_id' | 'competition_name'>
+      season_objectives: TableDef<SeasonObjectiveRow, 'career_id' | 'season_id' | 'description'>
     }
     Views: Record<string, never>
     Functions: Record<string, never>

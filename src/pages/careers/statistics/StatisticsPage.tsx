@@ -36,56 +36,20 @@ function StatCard({ icon, label, value, sub, color }: { icon: React.ReactNode; l
 }
 
 // ── Player view ────────────────────────────────────────────────────────────
-function PlayerStatsView({ careerId, filter, showCleanSheets }: {
-  careerId: string
-  filter: string
+interface MatchCompRow { id: string; competition_name: string | null; goals_against: number }
+interface CompAgg {
+  competition_name: string
+  matches_played: number; goals: number; assists: number
+  yellow_cards: number; red_cards: number; clean_sheets: number
+}
+
+function StatsTable({ rows, showCleanSheets, careerId, editLink }: {
+  rows: CompAgg[]
   showCleanSheets: boolean
+  careerId: string
+  editLink?: (r: CompAgg) => string
 }) {
   const { career } = useCareer()
-  const [rows, setRows] = useState<PlayerSeasonStatsRow[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    setLoading(true)
-    const q = supabase
-      .from('player_season_stats')
-      .select('*')
-      .eq('career_id', careerId)
-      .order('competition_name', { ascending: true })
-    if (filter !== 'all') q.eq('season_id', filter)
-    q.then(({ data }) => {
-      setRows(data ?? [])
-      setLoading(false)
-    })
-  }, [careerId, filter])
-
-  if (loading) {
-    return (
-      <div className="flex min-h-[30vh] items-center justify-center">
-        <div className="size-7 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    )
-  }
-
-  if (rows.length === 0) {
-    return (
-      <div className="rounded-xl border border-dashed p-12 text-center">
-        <TrendingUp className="mx-auto mb-3 size-10 text-muted-foreground/40" />
-        <p className="font-medium">Sin estadísticas registradas</p>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Registra tus estadísticas manualmente o desde los partidos.
-        </p>
-        <Button asChild size="sm" className="mt-4">
-          <Link to={`/careers/${career.id}/statistics/entry`}>
-            <Plus className="size-4" />
-            Registrar estadísticas
-          </Link>
-        </Button>
-      </div>
-    )
-  }
-
-  // Totals
   const total = rows.reduce(
     (acc, r) => ({
       matches_played: acc.matches_played + r.matches_played,
@@ -93,45 +57,21 @@ function PlayerStatsView({ careerId, filter, showCleanSheets }: {
       assists: acc.assists + r.assists,
       yellow_cards: acc.yellow_cards + r.yellow_cards,
       red_cards: acc.red_cards + r.red_cards,
-      clean_sheets: acc.clean_sheets + (r.clean_sheets ?? 0),
+      clean_sheets: acc.clean_sheets + r.clean_sheets,
     }),
     { matches_played: 0, goals: 0, assists: 0, yellow_cards: 0, red_cards: 0, clean_sheets: 0 },
   )
-
   return (
-    <div className="space-y-8">
-      {/* Totales */}
-      <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          Totales acumulados
-        </h2>
-        <div className={cn('grid gap-3', showCleanSheets ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6' : 'grid-cols-2 sm:grid-cols-5')}>
-          <StatCard icon={<Gamepad2 className="size-4" />} label="Partidos" value={total.matches_played} />
-          <StatCard icon={<Target className="size-4" />} label="Goles" value={total.goals} color="text-primary" />
-          <StatCard icon={<Zap className="size-4" />} label="Asistencias" value={total.assists} color="text-blue-400" />
-          <StatCard
-            icon={<Square className="size-3 fill-yellow-400 text-yellow-400" />}
-            label="T. Amarillas"
-            value={total.yellow_cards}
-            color="text-yellow-400"
-          />
-          <StatCard
-            icon={<Square className="size-3 fill-red-500 text-red-500" />}
-            label="T. Rojas"
-            value={total.red_cards}
-            color="text-red-400"
-          />
-          {showCleanSheets && (
-            <StatCard icon={<Shield className="size-4" />} label="Vallas invictas" value={total.clean_sheets} color="text-emerald-400" />
-          )}
-        </div>
-      </section>
-
-      {/* Por competición */}
-      <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          Por competición
-        </h2>
+    <div className="space-y-6">
+      <div className={cn('grid gap-3', showCleanSheets ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6' : 'grid-cols-2 sm:grid-cols-5')}>
+        <StatCard icon={<Gamepad2 className="size-4" />} label="Partidos" value={total.matches_played} />
+        <StatCard icon={<Target className="size-4" />} label="Goles" value={total.goals} color="text-primary" />
+        <StatCard icon={<Zap className="size-4" />} label="Asistencias" value={total.assists} color="text-blue-400" />
+        <StatCard icon={<Square className="size-3 fill-yellow-400 text-yellow-400" />} label="T. Amarillas" value={total.yellow_cards} color="text-yellow-400" />
+        <StatCard icon={<Square className="size-3 fill-red-500 text-red-500" />} label="T. Rojas" value={total.red_cards} color="text-red-400" />
+        {showCleanSheets && <StatCard icon={<Shield className="size-4" />} label="Vallas invictas" value={total.clean_sheets} color="text-emerald-400" />}
+      </div>
+      {rows.length > 0 && (
         <div className="overflow-hidden rounded-xl border">
           <table className="w-full text-sm">
             <thead className="bg-muted/40">
@@ -142,42 +82,164 @@ function PlayerStatsView({ careerId, filter, showCleanSheets }: {
                 <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">A</th>
                 <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">TA</th>
                 <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">TR</th>
-                {showCleanSheets && (
-                  <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">VI</th>
-                )}
-                <th className="px-3 py-2.5" />
+                {showCleanSheets && <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-muted-foreground">VI</th>}
+                {editLink && <th className="px-3 py-2.5" />}
               </tr>
             </thead>
             <tbody className="divide-y divide-border/40">
-              {rows.map((r) => (
-                <tr key={r.id} className="hover:bg-muted/20">
+              {rows.map((r, i) => (
+                <tr key={i} className="hover:bg-muted/20">
                   <td className="px-4 py-3 font-medium">{r.competition_name}</td>
                   <td className="px-3 py-3 text-center tabular-nums">{r.matches_played}</td>
                   <td className="px-3 py-3 text-center font-semibold tabular-nums text-primary">{r.goals}</td>
                   <td className="px-3 py-3 text-center font-semibold tabular-nums text-blue-400">{r.assists}</td>
                   <td className="px-3 py-3 text-center tabular-nums text-yellow-400">{r.yellow_cards}</td>
                   <td className="px-3 py-3 text-center tabular-nums text-red-400">{r.red_cards}</td>
-                  {showCleanSheets && (
-                    <td className="px-3 py-3 text-center tabular-nums text-emerald-400">{r.clean_sheets ?? 0}</td>
+                  {showCleanSheets && <td className="px-3 py-3 text-center tabular-nums text-emerald-400">{r.clean_sheets}</td>}
+                  {editLink && (
+                    <td className="px-3 py-3">
+                      <Link to={editLink(r)} className="text-muted-foreground hover:text-foreground" title="Editar">
+                        <Pencil className="size-3.5" />
+                      </Link>
+                    </td>
                   )}
-                  <td className="px-3 py-3">
-                    <Link
-                      to={`/careers/${career.id}/statistics/entry?season=${r.season_id}`}
-                      className="text-muted-foreground hover:text-foreground"
-                      title="Editar"
-                    >
-                      <Pencil className="size-3.5" />
-                    </Link>
-                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">
-          PJ = Partidos jugados · G = Goles · A = Asistencias · TA = T. Amarillas · TR = T. Rojas{showCleanSheets ? ' · VI = Vallas invictas' : ''}
-        </p>
-      </section>
+      )}
+      <p className="text-xs text-muted-foreground">
+        PJ = Partidos · G = Goles · A = Asistencias · TA = T. Amarillas · TR = T. Rojas{showCleanSheets ? ' · VI = Vallas invictas' : ''}
+      </p>
+    </div>
+  )
+}
+
+function PlayerStatsView({ careerId, filter, showCleanSheets }: {
+  careerId: string
+  filter: string
+  showCleanSheets: boolean
+}) {
+  const { career } = useCareer()
+  const [manualRows, setManualRows] = useState<PlayerSeasonStatsRow[]>([])
+  const [matchRows, setMatchRows] = useState<CompAgg[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    async function load() {
+      // Manual entries
+      const q = supabase
+        .from('player_season_stats')
+        .select('*')
+        .eq('career_id', careerId)
+        .order('competition_name', { ascending: true })
+      if (filter !== 'all') q.eq('season_id', filter)
+      const { data: manual } = await q
+      setManualRows((manual as PlayerSeasonStatsRow[]) ?? [])
+
+      // Match-derived: fetch matches then events
+      const mq = supabase.from('matches').select('id, competition_name, goals_against').eq('career_id', careerId)
+      if (filter !== 'all') mq.eq('season_id', filter)
+      const { data: matches } = await mq
+      const matchList = (matches as MatchCompRow[]) ?? []
+
+      if (matchList.length > 0) {
+        const matchIds = matchList.map((m) => m.id)
+        const { data: events } = await supabase
+          .from('match_events')
+          .select('match_id, event_type')
+          .in('match_id', matchIds)
+          .in('event_type', ['goal', 'assist', 'yellow_card', 'red_card'])
+
+        const compMap: Record<string, CompAgg> = {}
+        for (const m of matchList) {
+          const comp = m.competition_name ?? 'Sin competición'
+          if (!compMap[comp]) compMap[comp] = { competition_name: comp, matches_played: 0, goals: 0, assists: 0, yellow_cards: 0, red_cards: 0, clean_sheets: 0 }
+          compMap[comp].matches_played++
+          if (showCleanSheets && m.goals_against === 0) compMap[comp].clean_sheets++
+        }
+        for (const ev of events ?? []) {
+          const m = matchList.find((x) => x.id === ev.match_id)
+          if (!m) continue
+          const comp = m.competition_name ?? 'Sin competición'
+          if (ev.event_type === 'goal') compMap[comp].goals++
+          else if (ev.event_type === 'assist') compMap[comp].assists++
+          else if (ev.event_type === 'yellow_card') compMap[comp].yellow_cards++
+          else if (ev.event_type === 'red_card') compMap[comp].red_cards++
+        }
+        setMatchRows(Object.values(compMap).sort((a, b) => a.competition_name.localeCompare(b.competition_name)))
+      } else {
+        setMatchRows([])
+      }
+      setLoading(false)
+    }
+    load()
+  }, [careerId, filter, showCleanSheets])
+
+  if (loading) {
+    return (
+      <div className="flex min-h-[30vh] items-center justify-center">
+        <div className="size-7 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    )
+  }
+
+  const hasManual = manualRows.length > 0
+  const hasMatches = matchRows.length > 0
+
+  if (!hasManual && !hasMatches) {
+    return (
+      <div className="rounded-xl border border-dashed p-12 text-center">
+        <TrendingUp className="mx-auto mb-3 size-10 text-muted-foreground/40" />
+        <p className="font-medium">Sin estadísticas registradas</p>
+        <p className="mt-1 text-sm text-muted-foreground">Registra partidos o sube estadísticas manuales.</p>
+        <Button asChild size="sm" className="mt-4">
+          <Link to={`/careers/${career.id}/statistics/entry`}><Plus className="size-4" />Registrar stats</Link>
+        </Button>
+      </div>
+    )
+  }
+
+  const manualAgg: CompAgg[] = manualRows.map((r) => ({
+    competition_name: r.competition_name,
+    matches_played: r.matches_played,
+    goals: r.goals,
+    assists: r.assists,
+    yellow_cards: r.yellow_cards,
+    red_cards: r.red_cards,
+    clean_sheets: r.clean_sheets ?? 0,
+  }))
+
+  return (
+    <div className="space-y-10">
+      {hasMatches && (
+        <section>
+          <div className="mb-4 flex items-center gap-2">
+            <span className="font-black text-primary">//</span>
+            <h2 className="text-base font-bold">Desde partidos registrados</h2>
+          </div>
+          <StatsTable rows={matchRows} showCleanSheets={showCleanSheets} careerId={careerId} />
+        </section>
+      )}
+      {hasManual && (
+        <section>
+          <div className="mb-4 flex items-center gap-2">
+            <span className="font-black text-primary">//</span>
+            <h2 className="text-base font-bold">Registros manuales</h2>
+          </div>
+          <StatsTable
+            rows={manualAgg}
+            showCleanSheets={showCleanSheets}
+            careerId={careerId}
+            editLink={(r) => {
+              const found = manualRows.find((mr) => mr.competition_name === r.competition_name)
+              return `/careers/${careerId}/statistics/entry?season=${found?.season_id ?? ''}`
+            }}
+          />
+        </section>
+      )}
     </div>
   )
 }

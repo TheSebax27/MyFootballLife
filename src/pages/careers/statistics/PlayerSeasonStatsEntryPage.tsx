@@ -17,6 +17,12 @@ const intField = z
   .transform((v) => (v ? parseInt(v, 10) : 0))
   .pipe(z.number().int().min(0).max(9999))
 
+const ovrField = z
+  .string()
+  .optional()
+  .transform((v) => (v ? parseInt(v, 10) : null))
+  .pipe(z.number().int().min(1).max(99).nullable())
+
 const schema = z.object({
   season_id: z.string().uuid('Selecciona una temporada'),
   competition_name: z.string().min(1, 'Nombre de competición requerido').max(100),
@@ -26,6 +32,8 @@ const schema = z.object({
   yellow_cards: intField,
   red_cards: intField,
   clean_sheets: z.string().optional().transform((v) => (v ? parseInt(v, 10) : null)).pipe(z.number().int().min(0).max(9999).nullable()),
+  overall: ovrField,
+  potential: ovrField,
 })
 
 type FormInput = z.input<typeof schema>
@@ -60,6 +68,8 @@ export function PlayerSeasonStatsEntryPage() {
       yellow_cards: '0',
       red_cards: '0',
       clean_sheets: '',
+      overall: '',
+      potential: '',
     },
   })
 
@@ -93,6 +103,8 @@ export function PlayerSeasonStatsEntryPage() {
         yellow_cards: values.yellow_cards,
         red_cards: values.red_cards,
         clean_sheets: showCleanSheets ? (values.clean_sheets ?? null) : null,
+        overall: values.overall ?? null,
+        potential: values.potential ?? null,
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'career_id,season_id,competition_name' },
@@ -195,6 +207,20 @@ export function PlayerSeasonStatsEntryPage() {
                 {errors.clean_sheets && <p className="text-sm text-destructive">{errors.clean_sheets.message}</p>}
               </div>
             )}
+          </div>
+
+          {/* OVR */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="overall">Overall (OVR)</Label>
+              <Input id="overall" inputMode="numeric" placeholder="Ej. 78" {...register('overall')} />
+              {errors.overall && <p className="text-sm text-destructive">{errors.overall.message}</p>}
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="potential">Potencial</Label>
+              <Input id="potential" inputMode="numeric" placeholder="Ej. 88" {...register('potential')} />
+              {errors.potential && <p className="text-sm text-destructive">{errors.potential.message}</p>}
+            </div>
           </div>
 
           {serverError && <p className="text-sm text-destructive">{serverError}</p>}

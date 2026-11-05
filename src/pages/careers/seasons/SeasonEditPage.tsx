@@ -49,6 +49,7 @@ export function SeasonEditPage() {
           label: data.label,
           club_name: data.club_name ?? '',
           status: data.status,
+          formation: data.formation ?? '',
           notes: data.notes ?? '',
         })
         setLoading(false)
@@ -65,6 +66,7 @@ export function SeasonEditPage() {
         label: values.label,
         club_name: values.club_name || null,
         status: values.status,
+        formation: values.formation || null,
         notes: values.notes || null,
       })
       .eq('id', seasonId)
@@ -142,6 +144,19 @@ export function SeasonEditPage() {
           />
           {errors.club_name && (
             <p className="text-sm text-destructive">{errors.club_name.message}</p>
+          )}
+        </div>
+
+        {/* Formation */}
+        <div className="space-y-1.5">
+          <Label htmlFor="formation">Formación (opcional)</Label>
+          <Input
+            id="formation"
+            placeholder="Ej. 4-3-3, 4-2-3-1..."
+            {...register('formation')}
+          />
+          {errors.formation && (
+            <p className="text-sm text-destructive">{errors.formation.message}</p>
           )}
         </div>
 

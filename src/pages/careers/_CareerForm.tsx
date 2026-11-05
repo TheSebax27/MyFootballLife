@@ -307,6 +307,23 @@ export function CareerForm({ defaultValues, lockedMode, hideNationalTeam, onSubm
         )}
       </div>
 
+      {/* Cover URL */}
+      <div className="space-y-1.5">
+        <Label htmlFor="cover_url">
+          Imagen de portada <span className="text-xs text-muted-foreground">(URL, opcional)</span>
+        </Label>
+        <Input
+          id="cover_url"
+          type="url"
+          placeholder="https://..."
+          aria-invalid={!!errors.cover_url}
+          {...register('cover_url')}
+        />
+        {errors.cover_url && (
+          <p className="text-xs text-destructive">{errors.cover_url.message}</p>
+        )}
+      </div>
+
       {/* Visibilidad */}
       <div className="space-y-1.5">
         <Label>Visibilidad</Label>
