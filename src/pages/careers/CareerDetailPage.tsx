@@ -289,8 +289,8 @@ export function CareerDetailPage() {
           </div>
         </div>
       )}
-      </div>{/* max-w-4xl */}
-      </div>{/* scrollable right */}
-    </div>{/* outer flex */}
+      </div>
+      </div>
+    </div>
   )
 }
