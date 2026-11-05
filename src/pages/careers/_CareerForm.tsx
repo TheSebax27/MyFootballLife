@@ -16,13 +16,14 @@ import { CLUBS } from '@/constants/clubs'
 type CareerFormProps = {
   defaultValues?: Partial<CareerFormValues>
   lockedMode?: boolean
+  hideNationalTeam?: boolean
   onSubmit: (values: CareerFormValues) => Promise<void>
   serverError: string | null
   submitLabel: string
   onCancel?: () => void
 }
 
-export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, submitLabel, onCancel }: CareerFormProps) {
+export function CareerForm({ defaultValues, lockedMode, hideNationalTeam, onSubmit, serverError, submitLabel, onCancel }: CareerFormProps) {
   const games = useGames()
   const [selectedLeagueName, setSelectedLeagueName] = useState<string>('')
 
@@ -183,7 +184,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
       <div className="space-y-1.5">
         <Label htmlFor="nationality">
           Nacionalidad {mode === 'manager' ? 'del entrenador' : 'del jugador'}{' '}
-          <span className="text-xs text-muted-foreground">(opcional)</span>
+          <span className="text-destructive">*</span>
         </Label>
         <Input
           id="nationality"
@@ -203,7 +204,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
       {/* Liga */}
       <div className="space-y-1.5">
         <Label htmlFor="league_name">
-          Liga <span className="text-xs text-muted-foreground">(opcional)</span>
+          Liga <span className="text-destructive">*</span>
         </Label>
         <Input
           id="league_name"
@@ -228,7 +229,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
       <div className="space-y-1.5">
         <Label htmlFor="club_name">
           {mode === 'manager' ? 'Club que diriges' : 'Club donde juegas'}{' '}
-          <span className="text-xs text-muted-foreground">(opcional)</span>
+          <span className="text-destructive">*</span>
         </Label>
         <Input
           id="club_name"
@@ -247,8 +248,8 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
         {errors.club_name && <p className="text-xs text-destructive">{errors.club_name.message}</p>}
       </div>
 
-      {/* Selección nacional — DT puede dirigir también una selección; jugador puede estar convocado */}
-      <div className="rounded-lg border border-border/50 bg-muted/30 p-4 space-y-3">
+      {/* Selección nacional — solo en edición */}
+      {!hideNationalTeam && <div className="rounded-lg border border-border/50 bg-muted/30 p-4 space-y-3">
         <p className="text-sm font-medium">
           {mode === 'manager' ? '¿También diriges una selección nacional?' : 'Llamado a la selección nacional'}
         </p>
@@ -269,7 +270,7 @@ export function CareerForm({ defaultValues, lockedMode, onSubmit, serverError, s
             ? 'Déjalo vacío si solo diriges un club.'
             : 'Déjalo vacío si no estás convocado actualmente.'}
         </p>
-      </div>
+      </div>}
 
       {/* Año de inicio */}
       <div className="space-y-1.5">

@@ -34,6 +34,7 @@ import { SquadPage } from '@/pages/careers/squad/SquadPage'
 import { NewSquadPlayerPage } from '@/pages/careers/squad/NewSquadPlayerPage'
 import { SquadPlayerDetailPage } from '@/pages/careers/squad/SquadPlayerDetailPage'
 import { SquadPlayerEditPage } from '@/pages/careers/squad/SquadPlayerEditPage'
+import { PlayerAwardsPage } from '@/pages/careers/awards/PlayerAwardsPage'
 import { AdminGuard } from '@/pages/admin/AdminGuard'
 import { AdminPage } from '@/pages/admin/AdminPage'
 import { AdminLeaguesPage } from '@/pages/admin/AdminLeaguesPage'
@@ -97,6 +98,7 @@ function App() {
             <Route path="titles/:titleId" element={<TitleDetailPage />} />
             <Route path="titles/:titleId/edit" element={<TitleEditPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
+            <Route path="player-awards" element={<PlayerAwardsPage />} />
           </Route>
         </Route>
 

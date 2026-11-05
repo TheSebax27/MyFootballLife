@@ -17,6 +17,7 @@ export type MatchEventType =
 export type TransferType =
   | 'purchase' | 'sale' | 'loan_in' | 'loan_out'
   | 'free_in' | 'free_out' | 'youth_promotion' | 'retirement'
+  | 'player_transfer' | 'player_loan' | 'player_free' | 'player_retirement'
 export type PreferredFoot = 'left' | 'right' | 'both'
 
 type Timestamps = { created_at: string; updated_at: string }
@@ -108,6 +109,7 @@ export type TransferRow = Timestamps & {
   from_club_id: string | null; from_club_name: string | null
   to_club_id: string | null; to_club_name: string | null
   fee: number | null; currency: string; wage_weekly: number | null
+  wage_frequency: 'weekly' | 'monthly' | 'annual' | null
   contract_until: number | null; transfer_date: string | null; notes: string | null
 }
 export type CareerTitleRow = {

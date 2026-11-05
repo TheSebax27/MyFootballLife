@@ -15,11 +15,19 @@ export const careerSchema = z.object({
     ),
   position: z.enum(['portero', 'defensa', 'mediocampista', 'delantero']).optional(),
   national_team: z.string().max(80).optional(),
-  nationality: z.string().max(80).optional(),
-  league_name: z.string().max(100).optional(),
-  club_name: z.string().max(80).optional(),
+  nationality: z.string().min(1, 'Campo requerido').max(80),
+  league_name: z.string().min(1, 'Campo requerido').max(100),
+  club_name: z.string().min(1, 'Campo requerido').max(80),
   description: z.string().max(500, 'Máximo 500 caracteres').optional(),
   visibility: z.enum(['private', 'public']),
+}).superRefine((data, ctx) => {
+  if (data.mode === 'player' && !data.position) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ['position'],
+      message: 'Selecciona una posición',
+    })
+  }
 })
 
 export type CareerFormValues = z.infer<typeof careerSchema>

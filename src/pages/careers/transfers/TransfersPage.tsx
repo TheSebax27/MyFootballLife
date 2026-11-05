@@ -56,14 +56,21 @@ export function TransfersPage() {
     )
   }
 
+  const isPlayer = career.mode === 'player'
+  const sectionTitle = isPlayer ? 'Traspasos' : 'Fichajes'
+  const newLabel = isPlayer ? 'Nuevo movimiento' : 'Nuevo fichaje'
+  const emptyDesc = isPlayer
+    ? 'Registra tus traspasos, cesiones y movimientos.'
+    : 'Registra tus altas, bajas y préstamos.'
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-xl font-semibold">Fichajes</h2>
+          <h2 className="text-xl font-semibold">{sectionTitle}</h2>
           <p className="mt-0.5 text-sm text-muted-foreground">
             {filtered.length === 0
-              ? 'Sin fichajes'
+              ? `Sin ${isPlayer ? 'movimientos' : 'fichajes'}`
               : `${filtered.length} movimiento${filtered.length !== 1 ? 's' : ''}`}
           </p>
         </div>
@@ -85,7 +92,7 @@ export function TransfersPage() {
           <Button asChild size="sm">
             <Link to={`/careers/${career.id}/transfers/new`}>
               <Plus className="size-4" />
-              Nuevo fichaje
+              {newLabel}
             </Link>
           </Button>
         </div>
@@ -94,14 +101,12 @@ export function TransfersPage() {
       {filtered.length === 0 ? (
         <div className="rounded-xl border border-dashed py-16 text-center">
           <ArrowLeftRight className="mx-auto size-10 text-muted-foreground/40" />
-          <p className="mt-3 font-medium">No hay fichajes</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Registra tus altas, bajas y préstamos.
-          </p>
+          <p className="mt-3 font-medium">No hay {isPlayer ? 'movimientos' : 'fichajes'}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{emptyDesc}</p>
           <Button asChild size="sm" className="mt-4">
             <Link to={`/careers/${career.id}/transfers/new`}>
               <Plus className="size-4" />
-              Nuevo fichaje
+              {newLabel}
             </Link>
           </Button>
         </div>

@@ -20,7 +20,45 @@ export const TRANSFER_TYPE_LABEL: Record<string, string> = {
   free_out: 'Libre (salida)',
   youth_promotion: 'Ascenso cantera',
   retirement: 'Retirada',
+  player_transfer: 'Traspaso',
+  player_loan: 'Cesión',
+  player_free: 'Libre',
+  player_retirement: 'Retiro',
 }
+
+export const PLAYER_TRANSFER_TYPES = [
+  'player_transfer',
+  'player_loan',
+  'player_free',
+  'player_retirement',
+] as const
+
+export const PLAYER_TRANSFER_TYPE_LABEL: Record<string, string> = {
+  player_transfer: 'Traspaso',
+  player_loan: 'Cesión',
+  player_free: 'Libre',
+  player_retirement: 'Retiro',
+}
+
+export const WAGE_FREQUENCY_LABEL: Record<string, string> = {
+  weekly: 'Semanal',
+  monthly: 'Mensual',
+  annual: 'Anual',
+}
+
+export const playerTransferSchema = z.object({
+  season_id: z.string().uuid('Selecciona una temporada'),
+  type: z.enum(PLAYER_TRANSFER_TYPES),
+  to_club_name: z.string().max(80).optional(),
+  fee: feeField,
+  currency: z.string().length(3),
+  wage: feeField,
+  wage_frequency: z.enum(['weekly', 'monthly', 'annual']).optional(),
+  transfer_date: z.string().optional(),
+  notes: z.string().max(1000).optional(),
+})
+
+export type PlayerTransferFormValues = z.infer<typeof playerTransferSchema>
 
 const feeField = z
   .string()

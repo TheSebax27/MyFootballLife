@@ -124,6 +124,7 @@ export function NewCareerPage() {
           <CareerForm
             defaultValues={{ mode }}
             lockedMode
+            hideNationalTeam
             onSubmit={handleSubmit}
             serverError={serverError}
             submitLabel="Crear carrera"
