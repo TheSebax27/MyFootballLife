@@ -43,10 +43,9 @@ interface CompAgg {
   yellow_cards: number; red_cards: number; clean_sheets: number
 }
 
-function StatsTable({ rows, showCleanSheets, careerId, editLink }: {
+function StatsTable({ rows, showCleanSheets, editLink }: {
   rows: CompAgg[]
   showCleanSheets: boolean
-  careerId: string
   editLink?: (r: CompAgg) => string
 }) {
   const total = rows.reduce(
@@ -219,7 +218,7 @@ function PlayerStatsView({ careerId, filter, showCleanSheets }: {
             <span className="font-black text-primary">//</span>
             <h2 className="text-base font-bold">Desde partidos registrados</h2>
           </div>
-          <StatsTable rows={matchRows} showCleanSheets={showCleanSheets} careerId={careerId} />
+          <StatsTable rows={matchRows} showCleanSheets={showCleanSheets} />
         </section>
       )}
       {hasManual && (
@@ -231,7 +230,6 @@ function PlayerStatsView({ careerId, filter, showCleanSheets }: {
           <StatsTable
             rows={manualAgg}
             showCleanSheets={showCleanSheets}
-            careerId={careerId}
             editLink={(r) => {
               const found = manualRows.find((mr) => mr.competition_name === r.competition_name)
               return `/careers/${careerId}/statistics/entry?season=${found?.season_id ?? ''}`
