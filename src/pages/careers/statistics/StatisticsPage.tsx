@@ -49,7 +49,6 @@ function StatsTable({ rows, showCleanSheets, careerId, editLink }: {
   careerId: string
   editLink?: (r: CompAgg) => string
 }) {
-  const { career } = useCareer()
   const total = rows.reduce(
     (acc, r) => ({
       matches_played: acc.matches_played + r.matches_played,
