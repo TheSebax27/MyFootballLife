@@ -28,7 +28,8 @@ const schema = z.object({
   clean_sheets: z.string().optional().transform((v) => (v ? parseInt(v, 10) : null)).pipe(z.number().int().min(0).max(9999).nullable()),
 })
 
-type FormValues = z.infer<typeof schema>
+type FormInput = z.input<typeof schema>
+type FormOutput = z.output<typeof schema>
 
 export function PlayerSeasonStatsEntryPage() {
   const { career } = useCareer()
@@ -48,17 +49,17 @@ export function PlayerSeasonStatsEntryPage() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+  } = useForm<FormInput, unknown, FormOutput>({
     resolver: zodResolver(schema),
     defaultValues: {
       season_id: preSeasonId,
       competition_name: '',
-      matches_played: '0' as unknown as number,
-      goals: '0' as unknown as number,
-      assists: '0' as unknown as number,
-      yellow_cards: '0' as unknown as number,
-      red_cards: '0' as unknown as number,
-      clean_sheets: '' as unknown as null,
+      matches_played: '0',
+      goals: '0',
+      assists: '0',
+      yellow_cards: '0',
+      red_cards: '0',
+      clean_sheets: '',
     },
   })
 
@@ -75,7 +76,7 @@ export function PlayerSeasonStatsEntryPage() {
       })
   }, [career.id])
 
-  async function onSubmit(values: FormValues) {
+  async function onSubmit(values: FormOutput) {
     setServerError(null)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
