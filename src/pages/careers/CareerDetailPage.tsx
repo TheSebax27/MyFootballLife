@@ -117,31 +117,12 @@ export function CareerDetailPage() {
         { label: 'Títulos', value: stats?.titles ?? '—', icon: Trophy, color: 'text-yellow-400' },
       ]
 
-  const figureImg = isPlayer ? '/images/jugador.webp' : '/images/dt.webp'
+  const figureImg = isPlayer ? '/images/griz.png' : '/images/mou.png'
 
   return (
     <div className="flex h-[calc(100svh-6.5rem)] overflow-hidden">
 
-      {/* ── Left figure panel ── */}
-      <div className="relative hidden w-[260px] shrink-0 overflow-hidden lg:block">
-        {/* fade top */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 z-10"
-          style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }} />
-        {/* fade bottom */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-10"
-          style={{ background: 'linear-gradient(to top, var(--background) 0%, transparent 100%)' }} />
-        {/* fade right */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 z-10"
-          style={{ background: 'linear-gradient(to right, transparent, var(--background))' }} />
-        <img
-          src={figureImg}
-          alt=""
-          aria-hidden
-          className="absolute bottom-0 left-1/2 h-[90%] w-auto -translate-x-1/2 object-contain object-bottom select-none"
-        />
-      </div>
-
-      {/* ── Right: scrollable content ── */}
+      {/* ── Left: scrollable content ── */}
       <div className="flex-1 overflow-y-auto px-4 py-8">
       <div className="mx-auto max-w-4xl">
 
@@ -291,6 +272,23 @@ export function CareerDetailPage() {
       )}
       </div>
       </div>
+
+      {/* ── Right figure panel ── */}
+      <div className="relative hidden w-[280px] shrink-0 lg:block xl:w-[340px]">
+        <img
+          src={figureImg}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-1/2 h-[85%] max-h-[600px] w-auto -translate-x-1/2 select-none object-contain object-bottom"
+          style={{ filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.6))' }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-[30%]"
+          style={{ background: 'linear-gradient(to top, var(--background) 0%, var(--background) 10%, transparent 100%)' }}
+        />
+      </div>
+
     </div>
   )
 }
