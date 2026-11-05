@@ -122,6 +122,14 @@ export type PlayerAwardRow = {
   player_id: string | null; player_name: string; award_name: string
   notes: string | null; created_at: string
 }
+export type PlayerSeasonStatsRow = {
+  id: string; career_id: string; season_id: string; owner_id: string
+  competition_name: string
+  matches_played: number; goals: number; assists: number
+  yellow_cards: number; red_cards: number
+  clean_sheets: number | null
+  created_at: string; updated_at: string
+}
 
 // Insert: todo opcional salvo lo que la BD exige. Update: todo opcional.
 type TableDef<Row, Required extends keyof Row, Generated extends keyof Row = never> = {
@@ -154,6 +162,7 @@ export type Database = {
       transfers: TableDef<TransferRow, 'career_id' | 'season_id' | 'type' | 'player_name'>
       career_titles: TableDef<CareerTitleRow, 'career_id' | 'season_id' | 'competition_name'>
       player_awards: TableDef<PlayerAwardRow, 'career_id' | 'season_id' | 'player_name' | 'award_name'>
+      player_season_stats: TableDef<PlayerSeasonStatsRow, 'career_id' | 'season_id' | 'competition_name'>
     }
     Views: Record<string, never>
     Functions: Record<string, never>

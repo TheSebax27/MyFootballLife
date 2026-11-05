@@ -57,9 +57,31 @@ export function TitlesPage() {
   }
 
   const seasonMap = Object.fromEntries(seasons.map((s) => [s.id, s.label]))
+  const isPlayer = career.mode === 'player'
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className={isPlayer && titles.length > 0 ? 'flex h-[calc(100svh-6.5rem)] overflow-hidden' : ''}>
+
+      {/* Trophy figure — only player mode with titles */}
+      {isPlayer && titles.length > 0 && (
+        <div className="relative hidden w-[220px] shrink-0 overflow-hidden lg:block">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-20 z-10"
+            style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }} />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 z-10"
+            style={{ background: 'linear-gradient(to top, var(--background) 0%, transparent 100%)' }} />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 z-10"
+            style={{ background: 'linear-gradient(to right, transparent, var(--background))' }} />
+          <img
+            src="/images/titles-player.png"
+            alt=""
+            aria-hidden
+            className="absolute bottom-0 left-1/2 h-[88%] w-auto -translate-x-1/2 object-contain object-bottom select-none"
+          />
+        </div>
+      )}
+
+      <div className={isPlayer && titles.length > 0 ? 'flex-1 overflow-y-auto' : ''}>
+      <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Títulos</h1>
@@ -129,6 +151,8 @@ export function TitlesPage() {
           {titles.length} título{titles.length !== 1 ? 's' : ''} en total
         </p>
       )}
+    </div>
+      </div>{/* scrollable */}
     </div>
   )
 }

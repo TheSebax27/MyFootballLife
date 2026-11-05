@@ -26,6 +26,7 @@ import { NewTransferPage } from '@/pages/careers/transfers/NewTransferPage'
 import { TransferDetailPage } from '@/pages/careers/transfers/TransferDetailPage'
 import { TransferEditPage } from '@/pages/careers/transfers/TransferEditPage'
 import { StatisticsPage } from '@/pages/careers/statistics/StatisticsPage'
+import { PlayerSeasonStatsEntryPage } from '@/pages/careers/statistics/PlayerSeasonStatsEntryPage'
 import { TitlesPage } from '@/pages/careers/titles/TitlesPage'
 import { NewTitlePage } from '@/pages/careers/titles/NewTitlePage'
 import { TitleDetailPage } from '@/pages/careers/titles/TitleDetailPage'
@@ -99,6 +100,7 @@ function App() {
             <Route path="titles/:titleId" element={<TitleDetailPage />} />
             <Route path="titles/:titleId/edit" element={<TitleEditPage />} />
             <Route path="statistics" element={<StatisticsPage />} />
+            <Route path="statistics/entry" element={<PlayerSeasonStatsEntryPage />} />
             <Route path="player-awards" element={<PlayerAwardsPage />} />
             <Route path="player-awards/new" element={<NewPlayerAwardPage />} />
           </Route>

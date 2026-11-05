@@ -117,8 +117,33 @@ export function CareerDetailPage() {
         { label: 'Títulos', value: stats?.titles ?? '—', icon: Trophy, color: 'text-yellow-400' },
       ]
 
+  const figureImg = isPlayer ? '/images/jugador.webp' : '/images/dt.webp'
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="flex h-[calc(100svh-6.5rem)] overflow-hidden">
+
+      {/* ── Left figure panel ── */}
+      <div className="relative hidden w-[260px] shrink-0 overflow-hidden lg:block">
+        {/* fade top */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 z-10"
+          style={{ background: 'linear-gradient(to bottom, var(--background) 0%, transparent 100%)' }} />
+        {/* fade bottom */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 z-10"
+          style={{ background: 'linear-gradient(to top, var(--background) 0%, transparent 100%)' }} />
+        {/* fade right */}
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 z-10"
+          style={{ background: 'linear-gradient(to right, transparent, var(--background))' }} />
+        <img
+          src={figureImg}
+          alt=""
+          aria-hidden
+          className="absolute bottom-0 left-1/2 h-[90%] w-auto -translate-x-1/2 object-contain object-bottom select-none"
+        />
+      </div>
+
+      {/* ── Right: scrollable content ── */}
+      <div className="flex-1 overflow-y-auto px-4 py-8">
+      <div className="mx-auto max-w-4xl">
 
       {/* Header */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -264,6 +289,8 @@ export function CareerDetailPage() {
           </div>
         </div>
       )}
-    </div>
+      </div>{/* max-w-4xl */}
+      </div>{/* scrollable right */}
+    </div>{/* outer flex */}
   )
 }
