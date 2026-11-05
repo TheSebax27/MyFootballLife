@@ -120,29 +120,16 @@ export function CareerDetailPage() {
   const figureImg = isPlayer ? '/images/griz.png' : '/images/mou.png'
 
   return (
-    <div className="flex h-[calc(100svh-6.5rem)] overflow-hidden">
+    <div className="lg:flex lg:h-[calc(100svh-6.5rem)] lg:overflow-hidden">
 
       {/* ── Left: scrollable content ── */}
       <div className="flex-1 overflow-y-auto px-4 py-8">
       <div className="mx-auto max-w-4xl">
 
       {/* Header */}
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="space-y-2">
-          <div className="flex flex-wrap items-center gap-2">
-            {career.game && <Badge variant="secondary">{career.game.name}</Badge>}
-            <Badge variant="outline">{MODE_LABEL[career.mode] ?? career.mode}</Badge>
-            <Badge variant={STATUS_VARIANT[career.status] ?? 'secondary'}>
-              {STATUS_LABEL[career.status] ?? career.status}
-            </Badge>
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight">{career.name}</h1>
-          {career.manager_name && <p className="text-muted-foreground">{career.manager_name}</p>}
-          {career.description && (
-            <p className="max-w-xl text-sm text-muted-foreground">{career.description}</p>
-          )}
-        </div>
-        <div className="flex shrink-0 gap-2">
+      <div className="mb-6 flex flex-col gap-3">
+        {/* Action buttons — always visible at top */}
+        <div className="flex flex-wrap items-center gap-2">
           <Button variant="outline" size="sm" asChild>
             <Link to={`/careers/${career.id}/edit`}>
               <Pencil className="size-4" />
@@ -161,6 +148,21 @@ export function CareerDetailPage() {
             <Trash2 className="size-4" />
             Eliminar
           </Button>
+        </div>
+        {/* Career info */}
+        <div className="space-y-1">
+          <div className="flex flex-wrap items-center gap-2">
+            {career.game && <Badge variant="secondary">{career.game.name}</Badge>}
+            <Badge variant="outline">{MODE_LABEL[career.mode] ?? career.mode}</Badge>
+            <Badge variant={STATUS_VARIANT[career.status] ?? 'secondary'}>
+              {STATUS_LABEL[career.status] ?? career.status}
+            </Badge>
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight">{career.name}</h1>
+          {career.manager_name && <p className="text-muted-foreground">{career.manager_name}</p>}
+          {career.description && (
+            <p className="max-w-xl text-sm text-muted-foreground">{career.description}</p>
+          )}
         </div>
       </div>
 
@@ -274,18 +276,18 @@ export function CareerDetailPage() {
       </div>
 
       {/* ── Right figure panel ── */}
-      <div className="relative hidden w-[280px] shrink-0 lg:block xl:w-[340px]">
+      <div className="relative hidden w-[300px] shrink-0 lg:block xl:w-[380px]">
         <img
           src={figureImg}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-1/2 h-[85%] max-h-[600px] w-auto -translate-x-1/2 select-none object-contain object-bottom"
+          className="pointer-events-none absolute bottom-0 left-1/2 h-[92%] w-auto -translate-x-1/2 select-none object-contain object-bottom"
           style={{ filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.6))' }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-[30%]"
-          style={{ background: 'linear-gradient(to top, var(--background) 0%, var(--background) 10%, transparent 100%)' }}
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-[28%]"
+          style={{ background: 'linear-gradient(to top, var(--background) 0%, var(--background) 8%, transparent 100%)' }}
         />
       </div>
 
