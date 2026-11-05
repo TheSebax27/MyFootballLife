@@ -27,10 +27,6 @@ function timeAgo(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('es', { day: 'numeric', month: 'short' })
 }
 
-function seasonLabel(startYear: number | null) {
-  if (!startYear) return null
-  return `${startYear}/${(startYear + 1).toString().slice(2)}`
-}
 
 export function DashboardPage() {
   const { user } = useAuth()
