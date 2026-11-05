@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 import { TransferForm } from './_TransferForm'
 import { PlayerTransferForm } from './_PlayerTransferForm'
 import { useCareer } from '@/hooks/useCareer'
+import { useCurrentClub } from '@/hooks/useCurrentClub'
 import { supabase } from '@/services/supabase/client'
 import type { TransferFormValues, PlayerTransferFormValues } from '@/schemas/transfer'
 import type { SeasonRow } from '@/types/database'
@@ -11,6 +12,7 @@ import type { SeasonRow } from '@/types/database'
 export function NewTransferPage() {
   const { career } = useCareer()
   const navigate = useNavigate()
+  const currentClub = useCurrentClub(career.id, career.club_name)
   const [seasons, setSeasons] = useState<SeasonRow[]>([])
   const [serverError, setServerError] = useState<string | null>(null)
 
@@ -116,6 +118,7 @@ export function NewTransferPage() {
       ) : (
         <TransferForm
           seasons={seasons}
+          defaultValues={{ to_club_name: currentClub }}
           onSubmit={onManagerSubmit}
           serverError={serverError}
           submitLabel="Crear fichaje"

@@ -129,6 +129,8 @@ export type PlayerSeasonStatsRow = {
   matches_played: number; goals: number; assists: number
   yellow_cards: number; red_cards: number
   clean_sheets: number | null
+  wins: number; draws: number; losses: number
+  goals_for: number; goals_against: number
   overall: number | null; potential: number | null
   created_at: string; updated_at: string
 }

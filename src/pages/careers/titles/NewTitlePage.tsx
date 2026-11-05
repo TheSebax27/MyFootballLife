@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { TitleForm } from './_TitleForm'
 import { useCareer } from '@/hooks/useCareer'
+import { useCurrentClub } from '@/hooks/useCurrentClub'
 import { supabase } from '@/services/supabase/client'
 import type { TitleFormValues } from '@/schemas/title'
 import type { SeasonRow } from '@/types/database'
@@ -11,6 +12,7 @@ import { Button } from '@/components/ui/button'
 export function NewTitlePage() {
   const { career } = useCareer()
   const navigate = useNavigate()
+  const currentClub = useCurrentClub(career.id, career.club_name)
   const [seasons, setSeasons] = useState<SeasonRow[]>([])
   const [loading, setLoading] = useState(true)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -85,6 +87,7 @@ export function NewTitlePage() {
 
       <TitleForm
         seasons={seasons}
+        defaultValues={{ club_name: currentClub }}
         onSubmit={onSubmit}
         serverError={serverError}
         submitLabel="Añadir título"

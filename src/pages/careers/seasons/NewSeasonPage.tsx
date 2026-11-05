@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useCareer } from '@/hooks/useCareer'
 import { useAuth } from '@/hooks/useAuth'
+import { useCurrentClub } from '@/hooks/useCurrentClub'
 import { supabase } from '@/services/supabase/client'
 import { seasonSchema, type SeasonFormValues } from '@/schemas/season'
 
@@ -22,6 +23,7 @@ export function NewSeasonPage() {
   const { career } = useCareer()
   const { user } = useAuth()
   const navigate = useNavigate()
+  const currentClub = useCurrentClub(career.id, career.club_name)
   const [serverError, setServerError] = useState<string | null>(null)
 
   const {
@@ -37,6 +39,10 @@ export function NewSeasonPage() {
 
   const startYear = watch('start_year')
   const label = watch('label')
+
+  useEffect(() => {
+    if (currentClub) setValue('club_name', currentClub, { shouldValidate: false })
+  }, [currentClub])
 
   // Auto-fill label when start_year changes and label is still the auto-generated value or empty
   function handleStartYearBlur() {

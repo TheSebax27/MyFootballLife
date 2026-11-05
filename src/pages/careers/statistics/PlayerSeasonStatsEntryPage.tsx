@@ -27,6 +27,11 @@ const schema = z.object({
   season_id: z.string().uuid('Selecciona una temporada'),
   competition_name: z.string().min(1, 'Nombre de competición requerido').max(100),
   matches_played: intField,
+  wins: intField,
+  draws: intField,
+  losses: intField,
+  goals_for: intField,
+  goals_against: intField,
   goals: intField,
   assists: intField,
   yellow_cards: intField,
@@ -63,6 +68,11 @@ export function PlayerSeasonStatsEntryPage() {
       season_id: preSeasonId,
       competition_name: '',
       matches_played: '0',
+      wins: '0',
+      draws: '0',
+      losses: '0',
+      goals_for: '0',
+      goals_against: '0',
       goals: '0',
       assists: '0',
       yellow_cards: '0',
@@ -98,6 +108,11 @@ export function PlayerSeasonStatsEntryPage() {
         owner_id: user.id,
         competition_name: values.competition_name,
         matches_played: values.matches_played,
+        wins: values.wins,
+        draws: values.draws,
+        losses: values.losses,
+        goals_for: values.goals_for,
+        goals_against: values.goals_against,
         goals: values.goals,
         assists: values.assists,
         yellow_cards: values.yellow_cards,
@@ -171,6 +186,33 @@ export function PlayerSeasonStatsEntryPage() {
               {...register('competition_name')}
             />
             {errors.competition_name && <p className="text-sm text-destructive">{errors.competition_name.message}</p>}
+          </div>
+
+          {/* Resultados del equipo */}
+          <div className="space-y-3 rounded-xl border bg-card/50 p-4">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Resultados del equipo</p>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="wins">Victorias</Label>
+                <Input id="wins" inputMode="numeric" placeholder="0" {...register('wins')} />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="draws">Empates</Label>
+                <Input id="draws" inputMode="numeric" placeholder="0" {...register('draws')} />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="losses">Derrotas</Label>
+                <Input id="losses" inputMode="numeric" placeholder="0" {...register('losses')} />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="goals_for">Goles a favor</Label>
+                <Input id="goals_for" inputMode="numeric" placeholder="0" {...register('goals_for')} />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="goals_against">Goles en contra</Label>
+                <Input id="goals_against" inputMode="numeric" placeholder="0" {...register('goals_against')} />
+              </div>
+            </div>
           </div>
 
           {/* Stats grid */}
