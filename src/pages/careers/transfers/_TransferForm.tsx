@@ -48,7 +48,8 @@ export function TransferForm({ defaultValues, seasons, onSubmit, serverError, su
         <Label htmlFor="season_id">Temporada *</Label>
         <select
           id="season_id"
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          style={{ colorScheme: 'dark' }}
           {...register('season_id')}
         >
           <option value="">Selecciona una temporada</option>
@@ -136,7 +137,8 @@ export function TransferForm({ defaultValues, seasons, onSubmit, serverError, su
           <Label htmlFor="currency">Moneda</Label>
           <select
             id="currency"
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            style={{ colorScheme: 'dark' }}
             {...register('currency')}
           >
             {['EUR', 'USD', 'GBP', 'BRL', 'ARS', 'MXN'].map((c) => (

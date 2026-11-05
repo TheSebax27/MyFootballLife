@@ -60,7 +60,8 @@ export function PlayerTransferForm({ defaultValues, seasons, onSubmit, serverErr
         <Label htmlFor="season_id">Temporada <span className="text-destructive">*</span></Label>
         <select
           id="season_id"
-          className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          style={{ colorScheme: 'dark' }}
           {...register('season_id')}
         >
           <option value="">Selecciona una temporada</option>
@@ -125,7 +126,8 @@ export function PlayerTransferForm({ defaultValues, seasons, onSubmit, serverErr
                 {...register('fee')}
               />
               <select
-                className="w-24 rounded-md border border-input bg-transparent px-2 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                className="w-24 rounded-md border border-input bg-background px-2 py-1 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                style={{ colorScheme: 'dark' }}
                 {...register('currency')}
               >
                 {['EUR', 'USD', 'GBP', 'BRL', 'ARS', 'MXN'].map((c) => (

@@ -12,7 +12,7 @@ import { useProfile } from '@/hooks/useProfile'
 import { useGames } from '@/hooks/useGames'
 import { supabase } from '@/services/supabase/client'
 import { cn } from '@/utils/cn'
-import type { CareerRow } from '@/types/database'
+import type { CareerRow, SeasonRow } from '@/types/database'
 
 type Stats = { careers: number; titles: number }
 
@@ -38,6 +38,7 @@ export function DashboardPage() {
   const games = useGames()
   const [stats, setStats] = useState<Stats>({ careers: 0, titles: 0 })
   const [recentCareers, setRecentCareers] = useState<CareerRow[]>([])
+  const [currentSeasons, setCurrentSeasons] = useState<Record<string, SeasonRow>>({})
   const [loading, setLoading] = useState(true)
 
   const greeting = profile?.display_name || profile?.username || 'Entrenador'
@@ -57,13 +58,32 @@ export function DashboardPage() {
 
       const ids = (careerRows ?? []).map((c) => c.id)
       let titlesCount = 0
+      let seasonRows: SeasonRow[] = []
       if (ids.length > 0) {
-        const { count } = await supabase.from('titles').select('id', { count: 'exact', head: true }).in('career_id', ids)
+        const [{ count }, { data: seasons }] = await Promise.all([
+          supabase.from('career_titles').select('id', { count: 'exact', head: true }).in('career_id', ids),
+          supabase.from('seasons').select('*').in('career_id', ids).order('start_year', { ascending: false }),
+        ])
         titlesCount = count ?? 0
+        seasonRows = seasons ?? []
+      }
+
+      // Build map career_id -> current season (prefer in_progress, fallback to most recent)
+      const seasonMap: Record<string, SeasonRow> = {}
+      for (const s of seasonRows) {
+        if (s.status === 'in_progress' && !seasonMap[s.career_id]) {
+          seasonMap[s.career_id] = s
+        }
+      }
+      for (const s of seasonRows) {
+        if (!seasonMap[s.career_id]) {
+          seasonMap[s.career_id] = s
+        }
       }
 
       setStats({ careers: careersCount ?? 0, titles: titlesCount })
       setRecentCareers(careerRows ?? [])
+      setCurrentSeasons(seasonMap)
       setLoading(false)
     }
     load()
@@ -191,10 +211,15 @@ export function DashboardPage() {
                             <Gamepad2 className="size-3" />
                             {gameMap[career.game_id] ?? 'EA FC 25'}
                           </span>
-                          {career.start_year && (
+                          {currentSeasons[career.id] && (
                             <span className="flex items-center gap-1">
                               <Calendar className="size-3" />
-                              Temporada: {seasonLabel(career.start_year)}
+                              {currentSeasons[career.id].label}
+                            </span>
+                          )}
+                          {currentSeasons[career.id]?.club_name && (
+                            <span className="flex items-center gap-1 font-medium text-foreground/70">
+                              {currentSeasons[career.id].club_name}
                             </span>
                           )}
                         </div>
