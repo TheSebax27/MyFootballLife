@@ -276,17 +276,17 @@ export function CareerDetailPage() {
       </div>
 
       {/* ── Right figure panel ── */}
-      <div className="relative hidden w-[300px] shrink-0 lg:block xl:w-[380px]">
+      <div className="relative hidden w-[400px] shrink-0 lg:block xl:w-[520px]">
         <img
           src={figureImg}
           alt=""
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-1/2 h-[92%] w-auto -translate-x-1/2 select-none object-contain object-bottom"
-          style={{ filter: 'drop-shadow(-8px 0 32px rgba(0,0,0,0.6))' }}
+          className="pointer-events-none absolute bottom-0 left-1/2 h-[95%] w-auto min-w-[320px] -translate-x-1/2 select-none object-contain object-bottom xl:min-w-[400px]"
+          style={{ filter: 'drop-shadow(-12px 0 40px rgba(0,0,0,0.7))' }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-[28%]"
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-[25%]"
           style={{ background: 'linear-gradient(to top, var(--background) 0%, var(--background) 8%, transparent 100%)' }}
         />
       </div>
